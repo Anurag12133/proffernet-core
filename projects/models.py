@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.conf import settings
-
+from cloudinary.models import CloudinaryField
 class Project(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='projects', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -18,7 +18,7 @@ class Project(models.Model):
 
 class File(models.Model):
     project = models.ForeignKey(Project, related_name='files', on_delete=models.CASCADE)
-    file = models.FileField(upload_to='project_files/')
+    file = CloudinaryField('file')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'cloudinary',
+    'cloudinary_storage',
     'corsheaders',
     'djoser',
     'social_django',
@@ -98,19 +100,16 @@ AWS_SES_FROM_EMAIL = getenv('AWS_SES_FROM_EMAIL')
 USE_SES_V2 = True
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': getenv('CLOUDINARY_API_SECRET'),
-}
+CLOUDINARY_CLOUD_NAME = config("CLOUDINARY_CLOUD_NAME", default="")
+CLOUDINARY_API_KEY = config("CLOUDINARY_API_KEY", default="")
+CLOUDINARY_API_SECRET = config("CLOUDINARY_API_SECRET", default="")
 
 cloudinary.config( 
-  cloud_name = CLOUDINARY_STORAGE['CLOUD_NAME'], 
-  api_key = CLOUDINARY_STORAGE['API_KEY'], 
-  api_secret = CLOUDINARY_STORAGE['API_SECRET']
+  cloud_name = CLOUDINARY_CLOUD_NAME, 
+  api_key = CLOUDINARY_API_KEY , 
+  api_secret = CLOUDINARY_API_SECRET,
 )
 
-# Media Storage
 if DEBUG:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
@@ -118,7 +117,7 @@ if DEBUG:
     STATIC_ROOT = BASE_DIR / 'static'
 else:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    MEDIA_URL = f'https://res.cloudinary.com/{CLOUDINARY_STORAGE["CLOUD_NAME"]}/'
+    MEDIA_URL = f'https://res.cloudinary.com/{CLOUDINARY_CLOUD_NAME}/'
 
 DOMAIN = getenv('DOMAIN')
 SITE_NAME = 'Proffernet'
