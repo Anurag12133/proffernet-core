@@ -213,7 +213,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
     "https://proffernet.vercel.app",
-    "https://proffernet.live"
+    "https://www.proffernet.live"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
